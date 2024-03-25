@@ -1,0 +1,400 @@
+html {
+  font-family: "Nunito", "Open Sans", sans-serif;
+  font-size: 14px;
+  margin: 0px;
+  padding: 2px;
+}
+
+input {
+  font-family: "Nunito", "Open Sans", sans-serif;
+}
+#tablediv {
+  position: relative;
+  max-width: 1320px;
+  height: 1500px;
+}
+@media only screen and (min-width: 1322px) {
+  #tablediv {
+    margin: auto;
+  }
+}
+
+#calendar {
+  font-size: 14px;
+  width: 100%;
+  table-layout: fixed;
+}
+table {
+  margin: 0px;
+}
+
+table,
+tr,
+td,
+th {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+td {
+  padding: 2px 5px 2px;
+}
+.tabletd {
+  height: 112px;
+}
+th {
+  padding: 4px 5px 4px;
+}
+strong {
+  font-weight: bold;
+}
+.date {
+  padding: none;
+  margin: none;
+  position: relative;
+  top: 0px;
+  left: 0px;
+}
+body {
+  padding: 2px;
+}
+.notes {
+  float: right;
+  position: relative;
+  top: 0px;
+/*   overflow-y: scroll; */
+  -webkit-overflow-scrolling: touch;
+}
+#textColor,
+#highlightColor {
+  height: 21px;
+  padding: none;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 14px;
+}
+.pswitch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  display: inline-block;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 17px;
+  width: 17px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #8cd18e;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #8cd18e;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.container {
+  display: grid;
+  justify-content: center;
+  row-gap: 20px;
+
+  /*   grid-template-columns: repeat(5, 1fr);
+  gap: 10px; */
+}
+
+.box {
+  /*   border: 1px solid #666;
+  background-color: #ddd; */
+  border-radius: 2px;
+  text-align: left;
+  cursor: move;
+  width: 210px;
+}
+
+.box.over {
+  /*   border: 1px dotted #666; */
+}
+.box::before {
+  content: "→  ";
+}
+
+[draggable] {
+  user-select: none;
+}
+.sun {
+  color: red;
+}
+#cdatebtn {
+  width: 65%;
+  background-color: #e6efff;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  padding: 10px;
+  font-size: 14px;
+}
+.red {
+  color: red;
+}
+.asdfghjkl td {
+  border: 0px solid black;
+}
+.asdfghjkl tr {
+  border: 0px solid black;
+}
+
+.preset {
+  position: relative;
+  top: 5px;
+  min-height: 20px;
+  min-width: 20px;
+  margin: 0px;
+  padding: 0px;
+  display: inline-block;
+}
+.calendarspan {
+  position: relative;
+  top: 2px;
+}
+#clearinputs {
+  width: 98%;
+  height: 40px;
+  margin-top: 0px;
+  background-color: #d9ffe3;
+  color: black;
+  border-radius: 2px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+.aded {
+  text-align: center;
+  width: 68%;
+  height: 55px;
+  margin-top: 0px;
+  background-color: #ffecb8;
+  color: black;
+  border-radius: 2px;
+  border: 1px solid black;
+}
+.bigday {
+  font-size: 17px;
+  color: gray;
+}
+.bigdate {
+  font-size: 24px;
+}
+.today {
+  border-radius: 6px;
+  background-color: #d8ffcc;
+}
+.scrollock {
+  border-radius: 6px;
+  background-color: #d9feff;
+}
+.bigdata {
+  font-size: 18px;
+}
+.bignotes {
+  font-size: 18px;
+  float: right;
+}
+.togglebtn {
+  position: sticky;
+  bottom: 0px;
+  right: 0px;
+  left: calc(100% - 300px);
+  height: 300px;
+  width: 300px;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  border: 1px solid black;
+  font-size: 60px;
+}
+.bigtd {
+  max-width: 54px;
+  vertical-align: top;
+  padding: 10px;
+}
+.bigtditem {
+  text-align: left;
+  vertical-align: top;
+  padding: 10px;
+  padding-top: 13px;
+}
+.lefthr {
+  margin-left: 0px;
+}
+#easybuttons {
+  width: 100px;
+  height: 200px;
+  border: none;
+  background-color: transparent;
+  position: fixed;
+  right: 20px;
+  bottom: 40px;
+  border-radius: 0px 0px 40px 0px;
+  text-align: center;
+  padding: 10px;
+}
+#pmsubmit {
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: "Nunito", "Open Sans", sans-serif;
+  border-radius: 2px;
+  background-color: #ffebb5;
+  height: 40px;
+  width: 60%;
+  margin-top: 5px;
+}
+#left-arrow {
+  position: absolute;
+  left: 14px;
+  top: calc(100% - 30px);
+}
+#right-arrow {
+  position: absolute;
+  right: 14px;
+  top: calc(100% - 30px);
+}
+.bottombtn {
+  border: 1px solid black;
+  font-size: 15px;
+  border-radius: 3px;
+  color: black;
+  background-color: #fbffe6;
+  padding: 8px 20px;
+}
+#bigformsubmit {
+  border: 1px solid black;
+  border-radius: 2px;
+  color: black;
+  background-color: #ffe8e8;
+  font-size: 14px;
+  padding: 8px;
+  font-family: "Nunito", "Open Sans", sans-serif;
+  width: 80%;
+}
+input[type="color"] {
+  border-radius: 1px;
+}
+#pdsb {
+  border-radius: 2px;
+  width: 60%;
+  text-align: center;
+  border: 1px solid black;
+  color: black;
+  background-color: #faf2ff;
+  font-size: 16px;
+  padding: 2px;
+  margin: 2px;
+}
+#autoplayer {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  overflow: hidden;
+  width: calc(100vw - 22px);
+  height: 100vh;
+  background-color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+}
+#autoplayer img {
+  margin: auto;
+  margin-top: calc(calc(100vh - 300px) / 2);
+}
+
+#formadd input,
+#myModal input[type|="text"] {
+  border: 1px solid grey;
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 5px;
+  outline: none;
+}
+#formadd input:focus {
+  border: 2px solid black;
+  outline: none;
+}
+
+#freq {
+  border: 1px solid grey;
+  border-radius: 2px;
+  font-size: 12px;
+  padding: 2px;
+  background-color: white;
+}
+#freq:focus {
+  outline: none;
+}
+#myModal input[type|="color"] {
+  -webkit-apperance: none;
+  border: 1px solid grey;
+  border-radius: 1px;
+  outline: none;
+}
+.specialbuttontxt {
+  width: 100%;
+  height: 95%;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: "Nunito", "Open Sans", sans-serif;
+}

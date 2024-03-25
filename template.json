@@ -1,0 +1,27 @@
+{
+  "Modifiers": [
+    "Normal",
+    "Bold",
+    "Italic",
+    "Highlight",
+    "Colour",
+    "Strikethrough"
+  ],
+  "Week": [
+    {
+      "S": {
+        "Day": 28,
+        "Notes": "",
+        "Event": [
+          {
+            "TimeS": "",
+            "TimeE": "",
+            "Context": "",
+            "Features": [{ "key": 1, "colour": "FF0000" }]
+          }
+        ]
+      }
+    },
+    {}
+  ]
+}

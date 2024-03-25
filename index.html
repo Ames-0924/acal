@@ -1,0 +1,1272 @@
+<!-- <!DOCTYPE html> -->
+<html lang="en" id="maindoc">
+  <head>
+    <script>
+      const version = "3.20";
+      setTimeout(() => {
+        $("#version")[0].innerHTML = version;
+      }, 500);
+    </script>
+    <!-- Meta Tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=0.85, maximum-scale=0.85, user-scalable=no, interactive-widget=resizes-content"
+    />
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Jquery Scripts + Modules -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/utils/Draggable.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.4/TweenMax.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.1/Sortable.min.js"
+      integrity="sha512-3N7dD+tlndNxwAC0PwGNWnnEpzHQwgNl6/c9XW6+nqptoMhbI9Rb6kQiUFtYmXrox60oIELVSFAO0dCSfKb2tw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="/hanzilookup.min.js" defer></script>
+    <!-- Website Stuff -->
+    <link rel="icon" href="https://glitch.com/favicon.ico" />
+    <title>Hello world!</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      href="https://cdn.glitch.global/fb543d73-d6d8-481e-8fd2-9b1eb07c0940/calendar.png?v=1696829325736"
+      rel="apple-touch-icon"
+    />
+    <link
+      rel="apple-touch-startup-image"
+      href="https://cdn.glitch.global/fb543d73-d6d8-481e-8fd2-9b1eb07c0940/calendar.png?v=1696829325736"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="modal/modal.css" />
+    <link rel="stylesheet" href="modal/phonemodal.css" />
+    <!-- JS -->
+    <script src="/script.js" defer></script>
+    <script src="/load.js" defer></script>
+    <script src="/modal/modal.js" defer></script>
+    <script src="/modal/phonemodal.js" defer></script>
+    <script src="/scripts/calendar.js" defer></script>
+    <script src="/scripts/colordate.js" defer></script>
+    <script src="/scripts/files.js" defer></script>
+    <script src="/scripts/hanzi.js" defer></script>
+    <script src="/scripts/holiday.js" defer></script>
+    <script src="/scripts/kb.js" defer></script>
+    <script src="/scripts/newevent.js" defer></script>
+    <script src="/scripts/notes.js" defer></script>
+    <script src="/scripts/onload.js" defer></script>
+    <script src="/scripts/prototype.js" defer></script>
+    <script src="/scripts/delete.js" defer></script>
+  </head>
+  <body>
+    <span id="screenwidth" style="display: none"></span>
+    <div id="autoplayer" style="display: none">
+      <img
+        style="width: 200px; height: 200px"
+        src="https://cdn.glitch.global/fb543d73-d6d8-481e-8fd2-9b1eb07c0940/calendar.gif?v=1703206952280"
+      />
+      <br />
+      <span style="color: gray" id="autoplayertext"></span>
+    </div>
+    <div id="biggest" style="margin: 0px; padding: 0px">
+      <div id="parent">
+        <div id="tablediv">
+          <table id="calendar">
+            <tr>
+              <th><span style="color: red; font-weight: bold">Sun</span></th>
+              <th>Mon</th>
+              <th>Tue</th>
+              <th>Wed</th>
+              <th>Thurs</th>
+              <th>Fri</th>
+              <th>Sat</th>
+            </tr>
+          </table>
+        </div>
+        <br />
+        <br /><br />
+        <center>
+          <button onclick="savejson()" class="bottombtn">Export File</button>
+
+          <button onclick="importjson()" class="bottombtn">Import File</button>
+          <button onclick="savejson2()" class="bottombtn">
+            Export TO Cloud
+          </button>
+          <button onclick="loadjson2()" class="bottombtn" id="ifc">
+            Import FROM Cloud
+          </button>
+          <button onclick="togglemodes()" class="bottombtn">Toggle Mode</button>
+          <textarea id="export"></textarea>
+        </center>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+          <!-- Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <table
+              style="width: 100%; min-height: calc(70vh - 78px)"
+              id="dtable"
+            >
+              <tr>
+                <!--                 <td
+                  style="height: calc(76vh - 78px); width: 0px; display: none"
+                  rowspan="3"
+                ></td> -->
+                <td style="width: 50%" rowspan="3">
+                  <center>
+                    <table
+                      id="ddtable"
+                      style="border: 0px solid white; width: 80%"
+                      class="asdfghjkl"
+                    >
+                      <tr style="">
+                        <td style="width: 50%">Date:</td>
+                        <td style="text-align: right">
+                          <input
+                            type="date"
+                            id="eventdate"
+                            name="eventdate"
+                            style="
+                              width: 70%;
+                              -webkit-appearance: none;
+                              border: 1px solid gray;
+                              background-color: white;
+                              box-sizing: border-box;
+                              height: 42px;
+                              color: black;
+                              border-radius: 2px;
+                              font-size: 14px;
+                              font-family: 'Nunito';
+                            "
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Event Name:</td>
+                        <td style="text-align: right">
+                          <button onclick="fraccc()" id="frac">Date</button
+                          >&nbsp;&nbsp;
+                          <input
+                            type="text"
+                            id="context"
+                            onchange="checkwidth()"
+                            style="width: 70%; padding: 8px; font-size: 14px"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label for="timeS">Start time</label></td>
+                        <td style="text-align: right">
+                          <input
+                            type="tel"
+                            id="timeS"
+                            name="timeS"
+                            maxlength="5"
+                            oninput="checkvalidtime(this)"
+                            style="width: 70%; padding: 5px; font-size: 14px"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label for="timeE">End Time</label></td>
+                        <td style="text-align: right">
+                          <input
+                            type="tel"
+                            id="timeE"
+                            name="timeE"
+                            maxlength="5"
+                            oninput="checkvalidtime(this)"
+                            style="width: 70%; padding: 5px; font-size: 14px"
+                          />
+                        </td>
+                      </tr>
+                      <tr style="display: none">
+                        <td><label for="prefOr">P.C (0-3)</label></td>
+                        <td style="text-align: right">
+                          <input
+                            type="tel"
+                            id="prefOr"
+                            name="prefOr"
+                            maxlength="1"
+                            oninput="checkvalidtime(this)"
+                            style="width: 70%; padding: 5px; font-size: 14px"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                    <table style="width: 90%; text-align: center" id="ds1table">
+                      <tr style="height: 15%">
+                        <td style="width: 50%">Text Color (No = Black)</td>
+                        <td style="text-align: left; padding-left: 20px">
+                          <label class="switch">
+                            <input
+                              type="checkbox"
+                              id="textColorinput"
+                              onclick="if(this.checked){document.getElementById('textColor').style.display='inline-block'; }else{document.getElementById('textColor').style.display='none';}"
+                            />
+                            <span class="slider"></span> </label
+                          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          <input
+                            type="color"
+                            id="textColor"
+                            style="display: none"
+                            list="presetColorst"
+                          />
+                        </td>
+                      </tr>
+                      <tr style="height: 15%">
+                        <td style="width: 200px">Highlight (No = Colorless)</td>
+                        <td
+                          style="
+                            width: 200px;
+                            text-align: left;
+                            padding-left: 20px;
+                          "
+                        >
+                          <label class="switch">
+                            <input
+                              type="checkbox"
+                              id="highlightColorinput"
+                              onclick="if(this.checked){document.getElementById('highlightColor').style.display='inline-block';}else{document.getElementById('highlightColor').style.display='none';}"
+                            />
+                            <span class="slider"></span> </label
+                          >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                            type="color"
+                            id="highlightColor"
+                            style="display: none"
+                            list="presetColors"
+                          />
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                    <table style="width: 90%; text-align: center" id="ds2table">
+                      <tr style="height: 15%">
+                        <td style="width: 30%">Bold</td>
+                        <td style="width: 20%">
+                          <label class="switch">
+                            <input type="checkbox" id="boldinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                        <td style="width: 30%">Slanted (Italic)</td>
+                        <td style="width: 20%">
+                          <label class="switch">
+                            <input type="checkbox" id="italicinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                      </tr>
+                      <tr style="height: 15%">
+                        <td>Strikethrough</td>
+                        <td>
+                          <label class="switch"
+                            ><input type="checkbox" id="stinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                        <td>Underline</td>
+                        <td>
+                          <label class="switch"
+                            ><input type="checkbox" id="underinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                      </tr>
+                      <tr style="height: 15%">
+                        <td>Box around words</td>
+                        <td>
+                          <label class="switch"
+                            ><input type="checkbox" id="boxinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                        <td></td>
+                      </tr>
+                    </table>
+                    <br />
+                    <table style="border: 1px solid white; width: 80%">
+                      <tr style="border: 1px solid white">
+                        <td style="border: 1px solid white">Repeat?</td>
+                        <td style="border: 1px solid white">
+                          <label class="switch"
+                            ><input type="checkbox" id="repeatinput" />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                        <td
+                          style="
+                            border: 1px solid white;
+                            background-color: #f7f7f7;
+                          "
+                        >
+                          Repeat every...
+                        </td>
+                        <td
+                          style="
+                            border: 1px solid white;
+                            background-color: #f7f7f7;
+                          "
+                        >
+                          <select name="freq" id="freq">
+                            <option value="1">1 week</option>
+                            <option value="2">2 weeks</option>
+                            <option value="3">3 weeks</option>
+                            <option value="4">4 weeks</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                    <br />
+                    <input
+                      type="submit"
+                      onclick="newinput($('#timeS'), $('#timeE'), $('#context'), $('#eventdate'))"
+                      id="bigformsubmit"
+                    />
+                  </center>
+                </td>
+                <td style="height: 215px">
+                  <center>
+                    <table style="border: 1px solid white; width: 80%">
+                      <tr>
+                        <td style="border: 1px solid white; width: 50%">
+                          <div class="container" id="container">
+                            <div draggable="true" class="box"></div>
+
+                            <div draggable="true" class="box"></div>
+
+                            <div draggable="true" class="box"></div>
+
+                            <div draggable="true" class="box"></div>
+                          </div>
+                          <hr style="width: 50%" hidden />
+
+                          <br hidden />
+                          <hr style="width: 50%" hidden />
+                          <span hidden> Advanced Mode: </span>
+                          <label class="switch" style="display: none" hidden>
+                            <input type="checkbox" id="addel" hidden />
+                            <span class="slider" hidden></span
+                          ></label>
+                        </td>
+                        <td style="border: 1px solid white; text-align: center">
+                          <button class="aded" disabled>
+                            <span
+                              ondragenter="editadvancedstuff(event)"
+                              class="specialbuttontxt"
+                              >Drag here to Edit</span
+                            >
+                          </button>
+                          <div style="height: 25px"></div>
+                          <button class="aded" disabled>
+                            <span
+                              ondragenter="dragdel(event)"
+                              class="specialbuttontxt"
+                              >Drag here to Delete</span
+                            >
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                  </center>
+                </td>
+              </tr>
+              <tr>
+                <td style="height: 220px">
+                  <center>
+                    <table style="width: 90%; border: 1px solid white">
+                      <tr style="border: 1px solid white">
+                        <td
+                          style="
+                            border: 1px solid white;
+                            padding: 15px;
+                            width: 50%;
+                            border-right: 1px dashed black;
+                          "
+                        >
+                          <center>
+                            From&nbsp;&nbsp;&nbsp;<input
+                              id="scdate"
+                              type="date"
+                            />
+                            <div style="height: 5px"></div>
+                            To&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+                              id="ecdate"
+                              type="date"
+                            />
+                            <div style="height: 12px"></div>
+                            Change the color to:
+                            <div style="height: 5px"></div>
+                            <input
+                              id="cdate"
+                              type="color"
+                              style="width: calc(80% - 5px)"
+                              value="#FFFFFF"
+                            />
+                            <div style="height: 12px"></div>
+                            <button
+                              onclick="ucolor($('#scdate'), $('#ecdate'), $('#cdate'))"
+                              id="cdatebtn"
+                            >
+                              Submit
+                            </button>
+                          </center>
+                        </td>
+                        <td
+                          style="
+                            border: 1px dotted white;
+                            padding: 15px;
+                            width: 50%;
+                            text-align: center;
+                          "
+                        >
+                          Notes &nbsp;&nbsp;&nbsp;&nbsp;<input
+                            type="text"
+                            id="notesinput"
+                            onchange="notes()"
+                            onkeyup="notes()"
+                          />
+                          <div style="height: 12px"></div>
+                          Color of notes:
+                          <div style="height: 5px"></div>
+                          <input
+                            id="notescolor"
+                            style="width: calc(84%)"
+                            type="color"
+                            onchange="notes()"
+                          />
+                          <div style="height: 12px"></div>
+                          <span style="font-style: italic; opacity: 0.5"
+                            >Notes are autosaved</span
+                          >
+                          <div style="height: 5px"></div>
+                          <hr />
+                          <div style="height: 5px"></div>
+                          Is this a Holiday?
+                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label
+                            class="switch"
+                          >
+                            <input
+                              type="checkbox"
+                              id="holidayinput"
+                              onchange="holiday()"
+                            />
+                            <span class="slider"></span>
+                          </label>
+                        </td>
+                      </tr>
+                    </table>
+                  </center>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <center>
+                    <span>Preferences</span>
+                    <hr style="width: 50%" />
+                    <table style="width: 90%">
+                      <tr>
+                        <td style="width: 50%">Text Color</td>
+                        <td id="chat0"></td>
+                        <td id="chat1"></td>
+                        <td id="chat2"></td>
+                      </tr>
+                      <tr>
+                        <td style="width: 50%">Highlight</td>
+                        <td id="chah0"></td>
+                        <td id="chah1"></td>
+                        <td id="chah2"></td>
+                      </tr>
+                    </table>
+                  </center>
+
+                  <span
+                    id="widthchecker"
+                    style="
+                      border: none;
+                      padding: 0px;
+                      display: block;
+                      opacity: 0;
+                      width: fit-content;
+                    "
+                  ></span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div id="easytable" style="display: block">
+        <button
+          id="tdybtn"
+          onclick="presstodaybtn()"
+          style="
+            width: 40%;
+            border: 0px;
+            color: black;
+            background-color: rgb(255, 249, 232);
+            font-family: Nunito;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            position: fixed;
+            bottom: 24px;
+            box-shadow: -1px 3px 20px 20px #e2e2e2;
+            left: calc(50vw - 107px);
+            display: none;
+          "
+        >
+          Scroll to Today
+        </button>
+        <div
+          style="
+            position: fixed;
+            z-index: 1000;
+            width: 100%;
+            height: 50px;
+            bottom: 0px;
+            left: 0px;
+            background-color: white;
+            text-align: center;
+            font-size: 16px;
+            padding-top: 22px;
+            display:none;
+          "
+          id="dateclick"
+        >
+          Click on a date to replace this event.
+        </div>
+        <span id="checker"></span>
+        <table style="width: 100%; min-height: 400px" id="phonetable">
+          <tr style="position: sticky">
+            <td style="width: 10%"></td>
+            <td></td>
+          </tr>
+        </table>
+        <button onclick="togglemodes()">Toggle Modes</button>
+        <div id="phonemodal" style="display: none">
+          <span id="phoneclose" onclick="closephonemodal()">X</span>
+          <div id="block1">
+            <center>
+              <br />
+              <table style="width: 90%; text-align: center" id="eventinput">
+                <tr>
+                  <td style="width: 50%" colspan="3">
+                    <input
+                      type="text"
+                      style="
+                        border: 1px solid grey;
+                        margin: 2px auto;
+                        font-size: 18px;
+                        outline: none;
+                        width: 100%;
+                        height: 48px;
+                        padding: 13px;
+                      "
+                      id="mcontent"
+                      inputmode="none"
+                      onclick="showkeyboard('n', this)"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      placeholder="Event Name"
+                    />
+                  </td>
+                  <td
+                    style="
+                      width: 50%;
+                      border: 1px solid white;
+                      border-left: 1px solid black;
+                    "
+                  >
+                    <table
+                      style="width: 100%; text-align: center"
+                      id="specialtablu"
+                    >
+                      <tr>
+                        <td
+                          style="width: 33%"
+                          onclick="phonefrac()"
+                          id="ppickdate"
+                        >
+                          D
+                        </td>
+                        <td style="width: 33%">L</td>
+                        <td style="width: 33%">S</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="text-align: center">
+                    <input
+                      type="time"
+                      style="
+                        border: 1px solid grey;
+                        margin: 2px;
+                        font-size: 18px;
+                        outline: none;
+                        width: 25vw;
+                        height: 48px;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        flex-wrap: wrap;
+                      "
+                      required
+                      placeholder="Start T"
+                      step="300"
+                      onchange="document.getElementById('mstime').value = this.value.replace(':', '')"
+                      id="msdtime"
+                    />
+                    <input type="tel" style="display: none" id="mstime" />
+                  </td>
+                  <td></td>
+                  <td style="text-align: center">
+                    <input
+                      type="time"
+                      style="
+                        border: 1px solid grey;
+                        margin: 2px;
+                        font-size: 18px;
+                        outline: none;
+                        height: 48px;
+                        width: 25vw;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        flex-wrap: wrap;
+                      "
+                      placeholder="End T"
+                      step="300"
+                      onchange="document.getElementById('metime').value = this.value.replace(':', '')"
+                      list="presetTime"
+                      id="medtime"
+                    />
+
+                    <input type="tel" style="display: none" id="metime" />
+                    <datalist id="presetTime">
+                      <option value="06:10" />
+                      <option value="07:10" />
+                      <option value="08:10" />
+                    </datalist>
+                  </td>
+                  <td
+                    rowspan="2"
+                    style="
+                      border: 1px solid white;
+                      border-left: 1px solid black;
+                    "
+                  >
+                    <table
+                      style="width: 100%; text-align: center"
+                      id="specialtable"
+                    >
+                      <tr style="border: 1px solid white">
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                        <td
+                          style="
+                            border: 0.5px solid white;
+                            border-bottom: 1px solid black;
+                          "
+                        ></td>
+                      </tr>
+                      <tr id="specialtr">
+                        <td
+                          style="width: 50%; height: 38px"
+                          onclick="padd(this)"
+                          colspan="5"
+                        >
+                          TC<input
+                            type="checkbox"
+                            id="ptc"
+                            style="display: none"
+                          />
+                        </td>
+                        <td style="width: 50%" onclick="padd(this)" colspan="5">
+                          HL<input
+                            type="checkbox"
+                            id="phigh"
+                            style="display: none"
+                          />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" style="height: 38px">
+                          <input
+                            type="color"
+                            id="ptcc"
+                            list="presetColorst"
+                            style="-webkit-appearance: none; width: 100%"
+                          />
+                        </td>
+
+                        <td colspan="5">
+                          <input
+                            type="color"
+                            id="phighc"
+                            list="presetColors"
+                            style="-webkit-appearance: none; width: 100%"
+                          />
+                          <datalist id="presetColors">
+                            <option value="#dfffd2" />
+                            <option value="#00ff00" />
+                            <option value="#0000ff" />
+                          </datalist>
+                          <datalist id="presetColorst">
+                            <option value="#dfffd2" />
+                            <option value="#00ff00" />
+                            <option value="#0000ff" />
+                          </datalist>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          style="width: 20%; height: 38px"
+                          onclick="padd(this)"
+                          colspan="2"
+                        >
+                          <input
+                            type="checkbox"
+                            id="pitalic"
+                            style="display: none"
+                          /><span style="font-style: italic">I</span>
+                        </td>
+                        <td style="width: 20%" onclick="padd(this)" colspan="2">
+                          <input
+                            type="checkbox"
+                            id="pbold"
+                            style="display: none"
+                          /><span style="font-weight: bold">B</span>
+                        </td>
+                        <td style="width: 20%" onclick="padd(this)" colspan="2">
+                          <input
+                            type="checkbox"
+                            id="pst"
+                            style="display: none"
+                          /><span style="text-decoration: line-through">S</span>
+                        </td>
+                        <td style="width: 20%" onclick="padd(this)" colspan="2">
+                          <input
+                            type="checkbox"
+                            id="pun"
+                            style="display: none"
+                          /><span style="text-decoration: underline">U</span>
+                        </td>
+                        <td style="width: 20%" onclick="padd(this)" colspan="2">
+                          <input
+                            type="checkbox"
+                            id="pbaw"
+                            style="display: none"
+                          /><span style="border: 1px solid black"
+                            >&nbsp;A&nbsp;</span
+                          >
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <input
+                      type="date"
+                      style="
+                        border: 1px solid grey;
+                        margin: 2px auto;
+                        font-size: 18px;
+                        height: 62px;
+                        outline: none;
+                      "
+                      id="mdate"
+                      placeholder="Date"
+                    />
+                  </td>
+                </tr>
+              </table>
+
+              <button
+                id="pmsubmit"
+                onclick="newinput($('#mstime'), $('#metime'), $('#mcontent'), $('#mdate'))"
+                style="color: black"
+              >
+                Submit
+              </button>
+              <div style="height: 12px; width: 60%"></div>
+
+              <table style="width: calc(90% - 12px)">
+                <tr>
+                  <td style="width: 60%">
+                    <ul
+                      id="pitems"
+                      style="
+                        width: 100%;
+                        list-style-type: none;
+                        text-align: left;
+                        padding: 0px;
+                      "
+                    >
+                      <li id="plist1">item 1</li>
+                      <li id="plist2">item 2</li>
+                      <li id="plist3">item 3</li>
+                      <li id="plist4">item 4</li>
+                    </ul>
+                  </td>
+                  <td style="width: 40%">
+                    <button
+                      onclick="phone_del()"
+                      class="phone-right"
+                      color="#FF0000"
+                    >
+                      <img
+                        src="   https://cdn-icons-png.flaticon.com/512/2602/2602735.png "
+                        style="width: 50px; height: 50px"
+                      />
+                      &nbsp;&nbsp;Delete
+                    </button>
+                    <div style="height: 5px"></div>
+                    <button
+                      onclick="phone_switch()"
+                      class="phone-right"
+                      color="#000000"
+                    >
+                      <img
+                        src="   https://cdn-icons-png.flaticon.com/512/10529/10529631.png "
+                        width="50"
+                        height="50"
+                      />
+                      &nbsp;&nbsp;Switch Dates
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </center>
+            <center style="width: 70%; margin: auto; display: none">
+              <table style="width: 100%; border: none">
+                <tr style="border: none">
+                  <td style="width: 5%; border: none"></td>
+                  <td style="width: 70%; text-align: center; border: none"></td>
+                  <td
+                    style="
+                      border: none;
+                      padding: 3px 0px 0px 0px;
+                      text-align: center;
+                      width: 15%;
+                    "
+                  >
+                    <button id="pdel1" class="pdel" onclick="pdel(this)">
+                      🗑
+                    </button>
+                    <button id="pdel2" class="pdel" onclick="pdel(this)">
+                      🗑
+                    </button>
+                    <button id="pdel3" class="pdel" onclick="pdel(this)">
+                      🗑
+                    </button>
+                    <button id="pdel4" class="pdel" onclick="pdel(this)">
+                      🗑
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </center>
+          </div>
+
+          <div id="block2" style="display: none">
+            <center>
+              <br />
+              <table style="width: 70%">
+                <tr>
+                  <td style="width: 30%">Notes:</td>
+                  <td>
+                    <input
+                      type="text"
+                      style="
+                        border: 1px solid grey;
+                        margin: 2px auto;
+                        font-size: 18px;
+                        outline: none;
+                        padding-left: 10px;
+                        border-radius: 5px;
+                        height: 30px;
+                      "
+                      id="pnotes"
+                      inputmode="none"
+                      onclick="showkeyboard('n', this)"
+                      autocomplete="off"
+                      autocorrect="off"
+                      autocapitalize="off"
+                      spellcheck="false"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Color:</td>
+                  <td>
+                    <input
+                      type="color"
+                      id="pnotesc"
+                      style="height: 30px; width: 100%"
+                      onchange="pnotes()"
+                    />
+                  </td>
+                </tr>
+              </table>
+              <br />
+              <table style="width: 70%">
+                <tr>
+                  <td>From</td>
+                  <td style="width: 50%; text-align: center; padding: none">
+                    <input
+                      id="pscdate"
+                      type="date"
+                      style="width: 100%; font-size: 18px; margin: 1px"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>To</td>
+                  <td style="width: 50%; text-align: center">
+                    <input
+                      id="pecdate"
+                      type="date"
+                      style="width: 100%; font-size: 18px; margin: 1px"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Change colour to:</td>
+                  <td style="width: 50%; text-align: center">
+                    <input
+                      id="pcdate"
+                      type="color"
+                      style="width: 80%; font-size: 18px; margin: 1px"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2" style="text-align: center">
+                    <button
+                      onclick="ucolor($('#pscdate'), $('#pecdate'), $('#pcdate'))"
+                      id="pdsb"
+                    >
+                      Submit!
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              <br />
+              <table style="width: 70%">
+                <tr>
+                  <td>
+                    Is
+                    <input
+                      id="clickdate"
+                      type="date"
+                      style="font-size: 18px; margin: 1px"
+                      disabled
+                    />
+                    a holiday?&nbsp;&nbsp;&nbsp;
+                    <label class="pswitch">
+                      <input
+                        type="checkbox"
+                        id="chcbox"
+                        onchange="pholiday()"
+                      />
+                      <span class="pslider pround"></span>
+                    </label>
+                  </td>
+                </tr>
+              </table>
+              <br />
+              Version: <span id="version">X.XX</span>
+            </center>
+            <!--           <center><p>Color, Notes, Holiday</p></center> -->
+          </div>
+          <!--         <div id="block4" style="display: none">
+          <center>
+            <br /><br />
+            
+
+            <p>Preferences (Text Color)</p>
+            <button onclick="togglemodes()">save to cloud</button>
+          </center>
+        </div> -->
+          <div id="left-arrow">&lt;</div>
+          <div id="right-arrow">&gt;</div>
+        </div>
+        <div id="easykeyboard">
+          <div id="engkb" style="display: block">
+            <div id="numbers" style="display: none">
+              <span class="nuk">1</span>
+              <span class="nuk">2</span>
+              <span class="nuk">3</span>
+              <span class="nuk">4</span>
+              <span class="nuk">5</span>
+              <span class="nuk">6</span>
+              <span class="nuk">7</span>
+              <span class="nuk">8</span>
+              <span class="nuk">9</span>
+              <span class="nuk">0</span>
+              <br />
+              <span class="nuk">!</span>
+              <span class="nuk">@</span>
+              <span class="nuk">#</span>
+              <span class="nuk">$</span>
+              <span class="nuk">%</span>
+              <span class="nuk">^</span>
+              <span class="nuk">&</span>
+              <span class="nuk">*</span>
+              <span class="nuk">(</span>
+              <span class="nuk">)</span>
+              <br />
+              <span class="nuk">&lt;</span>
+              <span class="nuk">&gt;</span>
+              <span class="nuk">?</span>
+              <span class="nuk">:</span>
+              <span class="nuk">"</span>
+              <span class="nuk">{</span>
+              <span class="nuk">}</span>
+              <span class="nuk">_</span>
+              <span class="nuk">+</span>
+              <span class="nuk">|</span>
+              <br />
+              <span class="nuk">,</span>
+              <span class="nuk">.</span>
+              <span class="nuk">/</span>
+              <span class="nuk">;</span>
+              <span class="nuk">'</span>
+              <span class="nuk">[</span>
+              <span class="nuk">]</span>
+              <span class="nuk">-</span>
+              <span class="nuk">=</span>
+              <span
+                class="fc"
+                style="height: 32px; width: calc(100vw / 13); padding-top: 5px"
+                >⌫</span
+              >
+              <br />
+            </div>
+            <div id="letters">
+              <span class="nk">q</span>
+              <span class="nk">w</span>
+              <span class="nk">e</span>
+              <span class="nk">r</span>
+              <span class="nk">t</span>
+              <span class="nk">y</span>
+              <span class="nk">u</span>
+              <span class="nk">i</span>
+              <span class="nk">o</span>
+              <span class="nk">p</span>
+              <br />
+              <span class="nk">a</span>
+              <span class="nk">s</span>
+              <span class="nk">d</span>
+              <span class="nk">f</span>
+              <span class="nk">g</span>
+              <span class="nk">h</span>
+              <span class="nk">j</span>
+              <span class="nk">k</span>
+              <span class="nk">l</span>
+              <br />
+              <span class="fc">⇧</span>
+              <span class="nk">z</span>
+              <span class="nk">x</span>
+              <span class="nk">c</span>
+              <span class="nk">v</span>
+              <span class="nk">b</span>
+              <span class="nk">n</span>
+              <span class="nk">m</span>
+              <span class="fc">⌫</span>
+              <br />
+            </div>
+            <span class="no">123 .,/</span>
+            <span class="sp">space</span>
+            <span class="do">Done</span>
+            <br />
+            <span style="display: inline-block; width: 100vw; text-align: right"
+              ><span class="cl">🌐</span></span
+            >
+          </div>
+          <div id="chikb" style="display: none">
+            <center>
+              <table style="width: 90%">
+                <tr>
+                  <td style="width: 40%">
+                    <div
+                      class="rechars"
+                      style="width: 100%; text-align: center"
+                    ></div>
+                  </td>
+                  <td style="width: 60%; text-align: center">
+                    <div class="drawingBoard"></div>
+                    <span
+                      style="
+                        display: inline-block;
+                        width: 100%;
+                        text-align: center;
+                      "
+                      ><span class="cmdClear">Clear</span
+                      >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                      <span
+                        class="fc"
+                        style="
+                          height: 20px;
+                          padding-top: 2px;
+                          padding-bottom: 4px;
+                          font-size: 18px;
+                        "
+                        >Del</span
+                      ></span
+                    >
+                  </td>
+                </tr>
+              </table>
+              <span
+                style="display: inline-block; width: 100vw; text-align: right"
+                ><span class="cl">🌐</span></span
+              >
+              <span
+                style="
+                  color: grey;
+                  position: absolute;
+                  bottom: 15px;
+                  left: 24px;
+                "
+                >This layout only supports limited <br />traditional
+                characters.</span
+              >
+            </center>
+          </div>
+        </div>
+        <div id="easybuttons">
+          <button
+            style="
+              border-radius: 5px;
+              height: 100px;
+              background-color: #f7f7f7;
+              border: none;
+              border-radius: 100px;
+              width: 100px;
+              box-shadow: 0px 3px 12px 8px #d9d9d9;
+            "
+            onclick="getgetcloud()"
+          >
+            <img
+              src="https://cdn.glitch.global/fb543d73-d6d8-481e-8fd2-9b1eb07c0940/bc3f3694-f365-4712-ba9d-73ec0866736f.image.png?v=1705624205679"
+              alt="+"
+              style="width: 60px; height: 60px"
+            />
+          </button>
+          <br />
+          <br />
+          <button
+            style="
+              border-radius: 5px;
+              height: 100px;
+              background-color: #f7f7f7;
+              border: none;
+              border-radius: 100px;
+              width: 100px;
+              box-shadow: 0px 3px 12px 8px #d9d9d9;
+            "
+            onclick="savejson2()"
+          >
+            <img
+              src="https://cdn.glitch.global/fb543d73-d6d8-481e-8fd2-9b1eb07c0940/99dcdc66-a546-4af8-9514-a896623f9636.image.png?v=1705623829389"
+              alt="+"
+              style="width: 60px; height: 60px"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+    <!--id="phonetable"-->
+    <!--     <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw.js")
+          .then((registration) => {
+            console.log("Service worker registered:", registration);
+          })
+          .catch((error) => {
+            console.log("Service worker registration failed:", error);
+          });
+      }
+    </script> -->
+  </body>
+</html>
