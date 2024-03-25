@@ -1,0 +1,75 @@
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10vh auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 1212px;
+}
+@media only screen and (max-width: 1276px) {
+  .modal-content{
+    width: calc(100% - 66px)
+  }
+}
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#dtable, #dtable tr, #dtable td{
+  border: 1px solid black;
+  padding: 5px;
+}
+#ddtable, #ddtable tr, #ddtable td{
+  font-size: 16px;
+  border: 1px solid white;
+  padding: 5px;
+  -webkit-appearance: none;
+}
+#ds1table, #ds1table tr, #ds1table td{
+  font-size: 16px;
+  border: 1px dotted black;
+  padding: 5px;
+}
+#ds2table, #ds2table tr, #ds2table td{
+  font-size: 16px;
+  border: 1px dotted black;
+  padding: 5px;
+  
+}
+.modal-content ::-webkit-datetime-edit { padding: 5px; }
+#frac {
+  border: 1px solid black;
+  color: black;
+  border-radius: 2px;
+  background-color: #e3e4ff;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: "Nunito", "Open Sans", sans-serif;
+  padding: 5px;
+  width: 20%;
+}
